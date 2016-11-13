@@ -16,5 +16,16 @@
     <div id="my-element">
       console.log("hello runkit")
     </div>
+
+    <div id="you-element">
+
+    </div>
+
+    <script>
+      var notebook = RunKit.createNotebook({
+        element: document.getElementById('you-element')
+        source: "\"hello script\""
+      })
+    </script>
   </body>
 </html>
