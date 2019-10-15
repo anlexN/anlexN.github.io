@@ -1,8 +1,8 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App",
-  "lang": "en-US",
+  "name": "anlex N",
+  "short_name": "anlex N",
+  "description": "anlex N",
+  "lang": "zh-CN",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#EE350F",
