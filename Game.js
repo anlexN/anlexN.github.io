@@ -11,23 +11,17 @@ import {
     IonGrid,
     IonHeader,
     IonItem,
+    IonLabel,
     IonList,
+    IonListHeader,
     IonMenuButton,
     IonPage,
     IonRow,
     IonTitle,
-    IonToolbar,
-    IonText,
+    IonToolbar
 } from '@ionic/react';
-// import marked from 'marked';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
-
-// marked.setOptions({
-//     highlight (code) {
-//         return Prism.highlight(code, Prism.languages.javascript, 'javascript')
-//     }
-// })
 
 const GamePage = () => {
     const [snippet, setSnippet] = useState('');
@@ -36,7 +30,7 @@ const GamePage = () => {
         ['', '', '', '', '', '', '', '', '']
     ]);
 
-    const [players, setPlayers] = useState(['X', 'O']);
+    const [play, setPlayer] = useState('X');
     const [winner, setWinner] = useState(false);
 
     const board = [...history[history.length - 1]];
@@ -53,7 +47,7 @@ const GamePage = () => {
     ];
 
     function handleSquare (index) {
-        board[index] = players[0];
+        board[index] = play[0];
 
         setHistory(history.concat([board]));
 
@@ -64,21 +58,22 @@ const GamePage = () => {
             }
         }
 
-        setPlayers(players.reverse());
+        setPlayer(play => play === 'X' ? 'O' : 'X');
 
     }
 
     function handleUndo (index) {
         setHistory(history.slice(0, index + 1))
+        setPlayer(index % 2 === 0 ? 'X' : 'O');
         setWinner(false);
     }
 
     useEffect(() => {
         fetch('Game.js')
-        .then(res => res.text())
-        .then(text => setSnippet( 
-            Prism.highlight(text, Prism.languages.javascript, 'javascript')
-        ));
+            .then(res => res.text())
+            .then(text => setSnippet(
+                Prism.highlight(text, Prism.languages.javascript, 'javascript')
+            ));
     }, [])
 
     return (
@@ -114,15 +109,17 @@ const GamePage = () => {
 
                         <IonCol size="12" sizeMd="4">
                             <IonList lines="none">
-                                <IonItem>{winner ? 'Winner ->' : 'Player ->'} {players[0]}</IonItem>
+                                <IonListHeader>
+                                    <IonLabel>{winner ? 'Winner ->' : 'Player ->'} {play[0]}</IonLabel>
+                                </IonListHeader>
 
                                 {
                                     winner ? <IonItem><IonButton onClick={() => handleUndo(0)}>Restart game</IonButton></IonItem>
-                                    : history.slice(0, -1).map((_, index) => 
-                                        <IonItem>
-                                            <IonButton key={index} onClick={() => handleUndo(index)}>undo step {index + 1}</IonButton>
-                                        </IonItem>
-                                    )
+                                        : history.slice(0, -1).map((_, index) =>
+                                            <IonItem>
+                                                <IonButton key={index} onClick={() => handleUndo(index)}>undo step {index + 1}</IonButton>
+                                            </IonItem>
+                                        )
                                 }
 
                             </IonList>
