@@ -30,7 +30,7 @@ const GamePage = () => {
         ['', '', '', '', '', '', '', '', '']
     ]);
 
-    const [play, setPlayer] = useState('X');
+    const [player, setPlayer] = useState('X');
     const [winner, setWinner] = useState(false);
 
     const board = [...history[history.length - 1]];
@@ -47,7 +47,7 @@ const GamePage = () => {
     ];
 
     function handleSquare (index) {
-        board[index] = play[0];
+        board[index] = player;
 
         setHistory(history.concat([board]));
 
@@ -58,7 +58,7 @@ const GamePage = () => {
             }
         }
 
-        setPlayer(play => play === 'X' ? 'O' : 'X');
+        setPlayer(player => player === 'X' ? 'O' : 'X');
 
     }
 
@@ -110,7 +110,7 @@ const GamePage = () => {
                         <IonCol size="12" sizeMd="4">
                             <IonList lines="none">
                                 <IonListHeader>
-                                    <IonLabel>{winner ? 'Winner ->' : 'Player ->'} {play[0]}</IonLabel>
+                                    <IonLabel>{winner ? 'Winner ->' : 'Player ->'} {player}</IonLabel>
                                 </IonListHeader>
 
                                 {
