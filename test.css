@@ -285,6 +285,7 @@ header {
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 1;
   background-color: var(--default-primary-color);
   box-shadow: var(--box-shadow-4dp);
 }
@@ -736,6 +737,7 @@ button:disabled::after {
 }
 
 .menu ul {
+  width: max-content;
   background-color: white;
   list-style: none;
   overflow: hidden;
@@ -757,4 +759,71 @@ button:disabled::after {
 
 .menu li.active {
   background: rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+  /* width: 50%; */
+  position: relative;
+  display: flex;
+}
+
+input[name=tabs] {
+  display: none;
+}
+
+input[name=tabs]:checked + label {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+input[name=tabs]:checked + label + .tab-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[name=tabs]:nth-of-type(1):checked ~ .tabs-slide {
+  left: calc((100% / 5) * 0);
+}
+
+input[name=tabs]:nth-of-type(2):checked ~ .tabs-slide {
+  left: calc((100% / 5) * 1);
+}
+
+input[name=tabs]:nth-of-type(3):checked ~ .tabs-slide {
+  left: calc((100% / 5) * 2);
+}
+
+input[name=tabs]:nth-of-type(4):checked ~ .tabs-slide {
+  left: calc((100% / 5) * 3);
+}
+
+input[name=tabs]:nth-of-type(5):checked ~ .tabs-slide {
+  left: calc((100% / 5) * 4);
+}
+
+.tab-label {
+  color: rgba(0, 0, 0, 0.3);
+  line-height: 56px;
+  text-align: center;
+  height: 56px;
+  transition: color 0.2s ease;
+  width: 100%;
+}
+
+.tab-content {
+  position: absolute;
+  top: 60px;
+  display: none;
+  width: 100%;
+  background-color: white;
+}
+
+.tabs-slide {
+  background-color: var(--light-accent-color);
+  width: calc(100% / 5);
+  height: 4px;
+  position: absolute;
+  left: 0;
+  top: 56px;
+  transition: left 0.3s ease-out;
 }
